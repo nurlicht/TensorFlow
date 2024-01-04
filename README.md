@@ -16,10 +16,10 @@ See the codelab [TensorFlow.js — Making Predictions from 2D Data](https://code
 - The plots ```x vs. y``` and ```x vs. f(x)``` are superimposed for a semi-quantitative assessment of the learning.
 
 ### Execution
-Double-click on the file [index.html](./index.html) (or open it with your browser of choice). No server is needed.
+Double-click on the file [index.html](./src/index.html) (or open it with your browser of choice). No server is needed.
 
 ### Snapshot of Control-Parameters and Outputs
-  ![](./Sliders.png)
+  ![](./assets/Sliders.png)
 
 ### Defining new sliders
 In the function ```Controller.createSliders```, simply extend the local variable ```sliders```. For example to include a slider for ```sparsity```, the definition can be extended as follows:
