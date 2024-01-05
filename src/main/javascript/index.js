@@ -3,7 +3,9 @@ class TfjsApi {
   static tf;
 
   // https://js.tensorflow.org/api_vis/latest/
-  static tfvis; 
+  static tfvis;
+  
+  static browserClient = true;
 }
 
 class Utilities {
@@ -268,13 +270,17 @@ class Controller {
   }
 
   static createSlider(label, min, max, index) {
+    const value = (min + max) / 2;
+    if (!TfjsApi.browserClient) {
+      return {value};
+    }
     const slider = document.createElement('input');
     slider.id = `slider-${index}`;
     slider.type = 'range';
     slider.class = 'slider';
     slider.min = min;
     slider.max = max;
-    slider.value = (min + max) / 2;
+    slider.value = value;
   
     const sliderLabel = document.createElement('label');
     sliderLabel.for = slider.id;
@@ -360,6 +366,7 @@ class App {
       // non-browser client
       TfjsApi.tf = tfjsApi.tf;
       TfjsApi.tfvis = tfjsApi.tfvis;
+      TfjsApi.browserClient = false;
       return App.run();
     } else {
       // browser client
@@ -367,3 +374,5 @@ class App {
     }
   }
 }
+
+module.exports = App;
