@@ -1,9 +1,9 @@
 class TfjsApi {
   // https://js.tensorflow.org/api/latest/
-  static tf = tf;
+  static tf;
 
   // https://js.tensorflow.org/api_vis/latest/
-  static tfvis = tfvis; 
+  static tfvis; 
 }
 
 class Utilities {
@@ -206,6 +206,7 @@ class Trainer {
       x: element, y: data.Y.array[index],
     }));
     View.showScatterPlot([pointCloudOriginal, pointCloudEstimated], inputDataParameters);
+    return [pointCloudOriginal, pointCloudEstimated];
   }
 }
 
@@ -253,7 +254,7 @@ class Controller {
     // Train and test the model
     const tensors = ArrayWithMinMax.createPair(modelData.x, modelData.y);
     await Trainer.train(modelProvider.model, tensors, inputDataParameters);
-    await Trainer.test(modelProvider.model, tensors, inputDataParameters);
+    return await Trainer.test(modelProvider.model, tensors, inputDataParameters);
   }
 
   static createSliders(inputDataParameters) {
@@ -302,14 +303,15 @@ class Controller {
       sliders[key].oninput = async () => {
         Controller.disableSilders(sliders);
         inputDataParameters[key] = sliders[key].value;
-        await Controller.run(inputDataParameters);
+        const result = await Controller.run(inputDataParameters);
         Controller.enableSilders(sliders);
+        return result;
       }
     });
   }
 
-  static async start(sliders) {
-    await sliders.epochs.oninput();
+  static start(sliders) {
+    return sliders.epochs.oninput();
   }
 }
 
@@ -325,14 +327,43 @@ class App {
     const sliders = Controller.createSliders(inputDataParameters);
 
     // Trigger a new fit
-    Controller.start(sliders);
+    const result = await Controller.start(sliders);
+    App.validate(result, inputDataParameters);
+
+    return result;
+  }
+
+  static validate(result, inputDataParameters) {
+    console.assert(typeof result === 'object' && Array.isArray(result), 'result is not an array');
+    console.assert(result.length === 2, 'result has a wrong lenght of ' + result.length);
+    console.assert(typeof result[0] === 'object' && Array.isArray(result[0]), 'result[0] is not an array');
+    console.assert(typeof result[1] === 'object' && Array.isArray(result[1]), 'result[1] is not an array');
+
+    console.assert(result[1].length === inputDataParameters.nPoints, 'result[1] has a wrong lenght of ' + result[1].length);
+    console.assert(result[1][0].x === 0.5, 'result[1][0].x has a wrong lenght of ' + result[1][0].x);
+
+    console.log('Validation completed.')
   }
 
   static runAfterLoadingTfjs() {
-    document.addEventListener('DOMContentLoaded', App.run);
+    return new Promise((resolve, reject) => {
+      document.addEventListener('DOMContentLoaded', () => {
+        TfjsApi.tf = tf;
+        TfjsApi.tfvis = tfvis;
+        resolve(App.run());
+      });
+    });
   }
 
-  static start() {
-    App.runAfterLoadingTfjs();
+  static start(tfjsApi) {
+    if (typeof tfjsApi === 'object') {
+      // non-browser client
+      TfjsApi.tf = tfjsApi.tf;
+      TfjsApi.tfvis = tfjsApi.tfvis;
+      return App.run();
+    } else {
+      // browser client
+      return App.runAfterLoadingTfjs();
+    }
   }
 }

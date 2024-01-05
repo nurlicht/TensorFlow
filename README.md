@@ -16,7 +16,7 @@ See the codelab [TensorFlow.js — Making Predictions from 2D Data](https://code
 - The plots ```x vs. y``` and ```x vs. f(x)``` are superimposed for a semi-quantitative assessment of the learning.
 
 ### Execution
-Double-click on the file [index.html](./src/index.html) (or open it with your browser of choice). No server is needed.
+Double-click on the file [index.html](./src/html/index.html) (or open it with your browser of choice). No server is needed.
 
 ### Snapshot of Control-Parameters and Outputs
   The sliders for ```epochs``` (250 vs. 400) and ```noise``` (2.5% vs. 5%) provide a dynamic and user-defined compromise between <i>accuracy</i> and <i>speed</i>.
