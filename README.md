@@ -1,4 +1,4 @@
-# Interactive data generation and fitting with TensorFlow.js [![](https://github.com/nurlicht/test/actions/workflows/node.js.yml/badge.svg)](https://github.com/nurlicht/test/actions)
+# Interactive data generation and fitting with TensorFlow.js [![](https://github.com/nurlicht/TensorFlow/actions/workflows/node.js.yml/badge.svg)](https://github.com/nurlicht/TensorFlow/actions)
 
 ### Background
 See the codelab [TensorFlow.js — Making Predictions from 2D Data](https://codelabs.developers.google.com/codelabs/tfjs-training-regression) for an introduction to TenosrFlow.js and also to the use-case and the code here.
