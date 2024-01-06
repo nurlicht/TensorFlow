@@ -1,5 +1,5 @@
 const tfjs = require('@tensorflow/tfjs');
-const AppModule = require('../../src/javascript/index.js');
+const AppModule = require('../../../src/javascript/index.js');
 const App = AppModule.App;
 const InputDataParameters = AppModule.InputDataParameters;
 

@@ -4,11 +4,9 @@
   "description": "",
   "main": "./src/javascript/index.js",
   "type": "module",
-  "directories": {
-    "test": "./test/javascript"
-  },
+  "directories": {},
   "scripts": {
-    "test": "jest"
+    "test": "jest ./tests/javascript/node"
   },
   "keywords": [],
   "author": "",

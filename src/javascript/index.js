@@ -336,6 +336,12 @@ class Controller {
 
 class App {
   static async run(inputDataParameters) {
+    // Set inputDataParameters if not done
+    if (typeof inputDataParameters !== 'object') {
+      inputDataParameters = InputDataParameters.default();
+      console.warn('inputDataParameters was set to defaults.')
+    }
+
     // Initialize the scatter-plot
     View.showScatterPlot([]);
 
@@ -385,5 +391,12 @@ class App {
   }
 }
 
-exports.App = App;
-exports.InputDataParameters = InputDataParameters;
+if (typeof Deno !== 'undefined' && Deno.version) {
+  console.log('Deno is defined.');
+} else if (typeof module !== 'undefined' && module.exports) {
+  console.log('Node is defined.');
+  module.exports.App = App;
+  module.exports.InputDataParameters = InputDataParameters;
+} else {
+  console.log('Browser is defined.');
+}
