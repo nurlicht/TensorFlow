@@ -7,7 +7,8 @@
     <script src="../javascript/index.js"></script>
     <script>
       (async () => {
-        const result = await App.start();
+        const inputDataParameters = InputDataParameters.default();
+        const result = await App.start(inputDataParameters);
         console.log(result);
       })();
     </script>

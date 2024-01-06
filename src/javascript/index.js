@@ -94,14 +94,27 @@ class ArrayWithMinMax {
 }
 
 class InputDataParameters {
-  minX = 0.5;
-  maxX = 4.0;
-  nPoints = 400;
-  coefficient = 2.0;
-  noisePercent = 2.5;
-  sparsity = 2; //1-6
-  batchSize = 32;
-  epochs = 200;
+  minX;
+  maxX;
+  nPoints;
+  coefficient;
+  noisePercent;
+  sparsity; //1-6
+  batchSize;
+  epochs;
+
+  static default() {
+    const instance = new InputDataParameters();
+    instance.minX = 0.5;
+    instance.maxX = 4.0;
+    instance.nPoints = 400;
+    instance.coefficient = 2.0;
+    instance.noisePercent = 2.5;
+    instance.sparsity = 2; //1-6
+    instance.batchSize = 32;
+    instance.epochs = 200;
+    return instance;
+  }
 }
 
 class ModelData {
@@ -322,10 +335,7 @@ class Controller {
 }
 
 class App {
-  static async run() {
-    // Initialize the parameters
-    const inputDataParameters = new InputDataParameters();
-
+  static async run(inputDataParameters) {
     // Initialize the scatter-plot
     View.showScatterPlot([]);
 
@@ -346,33 +356,34 @@ class App {
     console.assert(typeof result[1] === 'object' && Array.isArray(result[1]), 'result[1] is not an array');
 
     console.assert(result[1].length === inputDataParameters.nPoints, 'result[1] has a wrong lenght of ' + result[1].length);
-    console.assert(result[1][0].x === 0.5, 'result[1][0].x has a wrong lenght of ' + result[1][0].x);
+    console.assert(result[1][0].x === inputDataParameters.minX, 'result[1][0].x has a wrong lenght of ' + result[1][0].x);
 
     console.log('Validation completed.')
   }
 
-  static runAfterLoadingTfjs() {
+  static runAfterLoadingTfjs(inputDataParameters) {
     return new Promise((resolve, reject) => {
       document.addEventListener('DOMContentLoaded', () => {
         TfjsApi.tf = tf;
         TfjsApi.tfvis = tfvis;
-        resolve(App.run());
+        resolve(App.run(inputDataParameters));
       });
     });
   }
 
-  static start(tfjsApi) {
+  static start(inputDataParameters, tfjsApi) {
     if (typeof tfjsApi === 'object') {
       // non-browser client
       TfjsApi.tf = tfjsApi.tf;
       TfjsApi.tfvis = tfjsApi.tfvis;
       TfjsApi.browserClient = false;
-      return App.run();
+      return App.run(inputDataParameters);
     } else {
       // browser client
-      return App.runAfterLoadingTfjs();
+      return App.runAfterLoadingTfjs(inputDataParameters);
     }
   }
 }
 
-module.exports = App;
+exports.App = App;
+exports.InputDataParameters = InputDataParameters;

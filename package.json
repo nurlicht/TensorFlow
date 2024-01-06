@@ -2,10 +2,10 @@
   "name": "src",
   "version": "1.0.0",
   "description": "",
-  "main": "./src/main/javascript/index.js",
+  "main": "./src/javascript/index.js",
   "type": "module",
   "directories": {
-    "test": "src/test"
+    "test": "./test/javascript"
   },
   "scripts": {
     "test": "jest"

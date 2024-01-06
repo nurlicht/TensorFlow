@@ -16,10 +16,14 @@ See the codelab [TensorFlow.js — Making Predictions from 2D Data](https://code
 - The plots ```x vs. y``` and ```x vs. f(x)``` are superimposed for a semi-quantitative assessment of the learning.
 
 ### Execution
-Double-click on the file [index.html](./src/html/index.html) (or open it with your browser of choice). No server is needed.
+- Browser client
+  - Double-click on the file [index.html](./src/html/index.html) (or open it with your browser of choice). No server is needed. There is no node.js dependency.
+- Node.js client
+  - Run the script ```npm install``` and then ```npm test```.
+  - An example of this client is the [GitHub Action](./.github/workflows/node.js.yml) of this project.  
 
 ### Snapshot of Control-Parameters and Outputs
-  The sliders for ```epochs``` (250 vs. 400) and ```noise``` (2.5% vs. 5%) provide a dynamic and user-defined compromise between <i>accuracy</i> and <i>speed</i>.
+  The sliders for ```epochs``` (250 vs. 400) and ```noise``` (2.5% vs. 5%) provide a dynamic and user-defined compromise between <i>accuracy</i> and <i>speed</i> (Note that these stochastic results are reproducible only in a statistical sense).
   
   ![](./assets/Sliders.png)
 
