@@ -397,6 +397,8 @@ if (typeof Deno !== 'undefined' && Deno.version) {
   console.log('Node is defined.');
   module.exports.App = App;
   module.exports.InputDataParameters = InputDataParameters;
-} else {
+} else if (typeof window !== 'undefined' && typeof document !== 'undefined') {
   console.log('Browser is defined.');
+} else {
+  throw new Error('An unknown Javascript client was encountered.');
 }
